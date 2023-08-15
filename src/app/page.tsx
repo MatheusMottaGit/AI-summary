@@ -6,7 +6,6 @@ import { FormEvent, useState } from 'react'
 import NoVideo from '@/components/NoVideo'
 import NoFile from '@/components/NoFile'
 import { formatVideoURL } from '@/utils/urlFormater'
-import axios from 'axios'
 
 export default function Home() {
 
