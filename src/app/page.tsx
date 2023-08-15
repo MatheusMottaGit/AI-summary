@@ -37,14 +37,19 @@ export default function Home() {
 
       <div className='w-full flex gap-5'>
         <div className='w-full rounded-md h-[370px] border border-zinc-200 flex flex-col items-center justify-center'>
-          <NoVideo />
-
-          <iframe
-            src={videoUrl}
-            title="YouTube video player"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
+          {
+            videoUrl ? (
+              <iframe
+                src={videoUrl}
+                title="YouTube video player"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                className='w-full h-full rounded-md'
+                allowFullScreen
+              ></iframe>
+            ) : (
+              <NoVideo />
+            )
+          }
         </div>
 
         <div className='w-full bg-zinc-100 rounded-md h-[370px] flex flex-col items-center justify-center'>
