@@ -1,10 +1,12 @@
-export function formatVideoURL(url: string) {  //youtube video URL format = https://www.youtube.com/watch?v=mvOYE3nTxvQ
+export function formatVideoURL(url: string) { // https://www.youtube.com/watch?v=4lJzm8Xsu3M&t=299s
 
-  // replace https://www.youtube.com/watch to https://www.youtube.com/embed
-  const [mainURL, videoID] = url.split('?v=')
-  const embedURL = mainURL.replace('watch', 'embed')
+  const [mainURL, incompleteVideoID] = url.split("?v=")
+  const [videoID, videoRunTime] = incompleteVideoID.split("&")
+
+  const formatedURL = mainURL.replace('watch', 'embed')
 
   return {
-    embedURL: embedURL + '/' + videoID
+    embedURL: formatedURL.concat(`/${videoID}`),
+    videoID
   }
 }
