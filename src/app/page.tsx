@@ -6,6 +6,7 @@ import { FormEvent, useState } from 'react'
 import NoVideo from '@/components/NoVideo'
 import NoFile from '@/components/NoFile'
 import { formatVideoURL } from '@/utils/urlFormater'
+import axios from 'axios'
 
 export default function Home() {
 
@@ -17,8 +18,10 @@ export default function Home() {
     const formData = new FormData(event.currentTarget)
     const inputURL = String(formData.get('url'))
 
-    const { embedURL } = formatVideoURL(inputURL)
+    const { embedURL, videoID } = formatVideoURL(inputURL)
     setVideoUrl(embedURL)
+
+    await axios.get('http://localhost:3333/audio?v=')
   }
 
   return (
@@ -35,16 +38,13 @@ export default function Home() {
         <Button type='submit'>Generate</Button>
       </form>
 
-      <div className='w-full flex gap-5'>
-        <div className='w-full rounded-md h-[370px] border border-zinc-200 flex flex-col items-center justify-center'>
+      <div className='w-[548px] flex gap-4 border border-zinc-200 rounded-md p-4'>
+        <div className='w-64 h-40 border border-zinc-100 rounded-md bg-zinc-100'>
           {
             videoUrl ? (
               <iframe
                 src={videoUrl}
-                title="YouTube video player"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 className='w-full h-full rounded-md'
-                allowFullScreen
               ></iframe>
             ) : (
               <NoVideo />
@@ -52,7 +52,7 @@ export default function Home() {
           }
         </div>
 
-        <div className='w-full bg-zinc-100 rounded-md h-[370px] flex flex-col items-center justify-center'>
+        <div className=' w-64 h-40 border border-zinc-100 rounded-md bg-zinc-100'>
           <NoFile />
         </div>
       </div>
