@@ -13,7 +13,7 @@ const NoFile = () => {
         className='h-6 w-6'
       />
 
-      <span className='text-zinc-300 text-sm'>Your video will appear here</span>
+      <span className='text-zinc-300 text-sm'>And here your document</span>
     </>
   )
 }
