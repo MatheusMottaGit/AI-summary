@@ -5,7 +5,7 @@ export const handleMP3 = () => new Promise<void>((resolve, reject) => {
   ffmpeg.setFfmpegPath(ffmpegStatic as string)
 
   ffmpeg()
-    .input('video.mp4')
+    .input('audio.mp4')
     .outputOptions('-ab', '192k')
     .saveToFile('audio.mp3')
     .on('end', () => {
