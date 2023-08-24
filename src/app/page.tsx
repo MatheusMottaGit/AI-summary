@@ -2,11 +2,9 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { FormEvent, useState } from 'react'
-
-import NoVideo from '@/components/NoVideo'
-import NoFile from '@/components/NoFile'
 import { formatVideoURL } from '@/utils/urlFormater'
 import axios from 'axios'
+import { Textarea } from '@/components/ui/textarea'
 
 export default function Home() {
 
@@ -21,11 +19,11 @@ export default function Home() {
     const { embedURL, videoID } = formatVideoURL(inputURL)
     setVideoUrl(embedURL)
 
-    await axios.get('http://localhost:3333/audio?v=')
+    // await axios.get(`http://localhost:3333/audio`, {})
   }
 
   return (
-    <main className='w-full p-4 flex flex-col items-center justify-center gap-12'>
+    <main className={`w-full p-4 flex flex-col items-center justify-center ${videoUrl ? 'gap-5' : 'gap-12'}`}>
       <div className='flex flex-col text-center'>
         <h1 className='font-bold text-xl'>Excerpt generator</h1>
 
@@ -33,28 +31,23 @@ export default function Home() {
       </div>
 
       <form onSubmit={handleSendURL} className='flex items-center gap-2 w-[548px]'>
-        <Input placeholder='Insert a youtube video URL...' name='url' />
+        <Input required placeholder='Insert a youtube video URL...' name='url' />
 
-        <Button type='submit'>Generate</Button>
+        <Button type='submit'>Send</Button>
       </form>
 
-      <div className='w-[548px] flex gap-4 border border-zinc-200 rounded-md p-4'>
-        <div className='w-64 h-40 border border-zinc-100 rounded-md bg-zinc-100'>
-          {
-            videoUrl ? (
-              <iframe
-                src={videoUrl}
-                className='w-full h-full rounded-md'
-              ></iframe>
-            ) : (
-              <NoVideo />
-            )
-          }
-        </div>
+      <div className='w-[548px] flex flex-col gap-4 border border-zinc-200 rounded-md p-4'>
+        {
+          videoUrl ? (
+            <iframe className='rounded-md h-64' src={videoUrl}></iframe>
+          ) : (
+            <></>
+          )
+        }
 
-        <div className=' w-64 h-40 border border-zinc-100 rounded-md bg-zinc-100'>
-          <NoFile />
-        </div>
+        <Textarea placeholder='Give AI a context about your video to get a better experience...' />
+
+        <Button>Generate File</Button>
       </div>
     </main>
   )
