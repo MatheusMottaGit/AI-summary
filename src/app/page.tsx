@@ -6,26 +6,54 @@ import { formatVideoURL } from '@/utils/urlFormater'
 import axios from 'axios'
 import { Textarea } from '@/components/ui/textarea'
 
+interface Transcription {
+  transcription: {
+    text: string
+  }
+}
+
 export default function Home() {
 
   const [videoUrl, setVideoUrl] = useState('')
+  // const [fileContent, setFileContent] = useState<Transcription | string>('')
 
   async function handleSendURL(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
+    try {
+      event.preventDefault()
 
-    const formData = new FormData(event.currentTarget)
-    const inputURL = String(formData.get('url'))
+      const formData = new FormData(event.currentTarget)
+      const inputURL = String(formData.get('url'))
 
-    const { embedURL, videoID } = formatVideoURL(inputURL)
-    setVideoUrl(embedURL)
+      const { embedURL, videoID } = formatVideoURL(inputURL)
+      setVideoUrl(embedURL)
 
-    // await axios.get(`http://localhost:3333/audio`, {})
+      await axios.get(`http://localhost:3333/audio`, {
+        params: {
+          videoID: videoID
+        }
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async function getVideoTranscription(event: FormEvent<HTMLFormElement>) {
+    try {
+      event.preventDefault()
+
+      const formData = new FormData(event.currentTarget)
+      const textarea = String(formData.get('textarea'))
+
+      const response = await axios.post('http://localhost:3333/role', { textarea })
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
     <main className={`w-full p-4 flex flex-col items-center justify-center ${videoUrl ? 'gap-5' : 'gap-12'}`}>
       <div className='flex flex-col text-center'>
-        <h1 className='font-bold text-xl'>Excerpt generator</h1>
+        <h1 className='font-bold text-xl'>File generator</h1>
 
         <span className='text-zinc-300 text-sm'>Using AI for creating a videos summary to help you</span>
       </div>
@@ -45,9 +73,11 @@ export default function Home() {
           )
         }
 
-        <Textarea placeholder='Give AI a context about your video to get a better experience...' />
+        <form className='flex flex-col gap-2' onSubmit={getVideoTranscription}>
+          <Textarea name='textarea' placeholder='Give AI a context about your video to get a better experience...' />
 
-        <Button>Generate File</Button>
+          <Button type='submit'>Generate File</Button>
+        </form>
       </div>
     </main>
   )
