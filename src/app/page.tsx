@@ -44,6 +44,8 @@ export default function Home() {
       const formData = new FormData(event.currentTarget)
       const textarea = String(formData.get('textarea'))
 
+      console.log(textarea)
+
       const response = await axios.post('http://localhost:3333/role', { textarea })
     } catch (error) {
       console.log(error)
