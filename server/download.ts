@@ -18,5 +18,5 @@ export const downloader = (videoID: string) => new Promise<void>((resolve, rejec
       console.log('[DOWNLOAD_FAILED]')
       reject()
     })
-    .pipe(fs.createWriteStream('audio.mp4'))
+    .pipe(fs.createWriteStream('./server/audio.mp4'))
 })
