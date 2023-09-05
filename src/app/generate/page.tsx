@@ -1,21 +1,17 @@
-'use client'
-import EmptyVideo from '@/components/EmptyVideo'
-import FileGeneratorTitle from '@/components/FileGeneratorTitle'
-import PromptForm from '@/components/PromptForm'
+import React from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import React from 'react'
-import { useTranscription } from '@/hooks/useTranscription'
+import { CheckCheckIcon } from 'lucide-react'
+import EmptyVideo from '@/components/generate/EmptyVideo'
+import PromptForm from '@/components/generate/PromptForm'
+import TitleAndFileName from '@/components/generate/TitleAndFileName'
 
 const Generate = () => {
-
-  const { handleSendURL, videoUrl } = useTranscription()
-
   return (
     <div className='flex flex-col w-full gap-5'>
-      <FileGeneratorTitle />
+      <TitleAndFileName />
 
-      <form onSubmit={handleSendURL} className='flex gap-3'>
+      <form className='flex gap-3'>
         <Input
           required
           placeholder='Insira a URL do vídeo do youtube...'
@@ -24,16 +20,12 @@ const Generate = () => {
 
         <Button type='submit'>
           Enviar
+          <CheckCheckIcon size={15} />
         </Button>
       </form>
 
-      <div className='border border-zinc-200 p-4 rounded-md flex flex-col gap-3'>
-        {
-          videoUrl ? (
-            <iframe src={videoUrl} className='aspect-video h-64 rounded-md w-full'></iframe>
-          ) : <EmptyVideo />
-        }
-
+      <div className='border border-zinc-600 p-4 rounded-md flex flex-col gap-3'>
+        <EmptyVideo />
         <PromptForm />
       </div>
     </div>
