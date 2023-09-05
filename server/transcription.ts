@@ -2,9 +2,9 @@ import fs from "fs";
 import { openai } from "./lib/openai";
 
 export async function handleTranscription() {
-  openai.audio.transcriptions.create({
+  await openai.audio.transcriptions.create({
     file: fs.createReadStream("./server/audio.mp3"),
-    model: "whisper-1",
+    model: "whisper-1"
   })
     .then(response => {
       console.log('[TRANSCRIPTION_STARTED]')
