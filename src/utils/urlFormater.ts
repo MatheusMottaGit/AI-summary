@@ -4,6 +4,7 @@ export function formatVideoURL(url: string) { // https://www.youtube.com/watch?v
   const [videoID, videoRunTime] = incompleteVideoID.split("&")
 
   const formatedURL = mainURL.replace('watch', 'embed')
+  console.log(formatedURL)
 
   return {
     embedURL: formatedURL.concat(`/${videoID}`),
