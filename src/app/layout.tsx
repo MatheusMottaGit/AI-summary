@@ -1,9 +1,7 @@
-'use client'
 import './globals.css'
 import { ReactNode } from "react"
 import { Inter } from 'next/font/google'
 import Header from '@/components/Header'
-import { TranscriptionProvider } from '@/contexts/Transcription'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -19,13 +17,12 @@ export const metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} font-inter flex flex-col divide-y divide-zinc-100 overflow-hidden`}>
+      <head />
+      <body className={`${inter.variable} bg-zinc-800 font-inter flex flex-col divide-y divide-zinc-700 overflow-hidden`}>
         <Header />
 
-        <main className='w-screen h-screen flex px-4 py-8'>
-          <TranscriptionProvider>
-            {children}
-          </TranscriptionProvider>
+        <main className='w-screen h-screen flex px-4 py-4'>
+          {children}
         </main>
       </body>
     </html>
