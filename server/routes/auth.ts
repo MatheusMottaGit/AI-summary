@@ -2,8 +2,17 @@ import axios from "axios";
 import { FastifyInstance } from "fastify";
 import { z } from "zod";
 import { prisma } from "../lib/prisma";
+import { authenticate } from "../plugins/authenticate";
 
 export async function authRoutes(app: FastifyInstance) {
+  app.get('/me', {
+    onRequest: [authenticate]
+  }, async (request) => {
+    return {
+      user: request.user
+    }
+  })
+
   app.post('/auth', async (request) => {
     const createUserSchema = z.object({
       access_token: z.string()
@@ -21,7 +30,7 @@ export async function authRoutes(app: FastifyInstance) {
       id: z.string(),
       name: z.string(),
       email: z.string(),
-      avatarUrl: z.string()
+      picture: z.string()
     })
 
     const userInfo = userInfoSchema.parse(userResponse.data)
@@ -38,7 +47,7 @@ export async function authRoutes(app: FastifyInstance) {
           googleId: userInfo.id,
           name: userInfo.name,
           email: userInfo.email,
-          avatarUrl: userInfo.avatarUrl
+          avatarUrl: userInfo.picture
         }
       })
     }
