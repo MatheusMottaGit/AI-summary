@@ -5,11 +5,6 @@ import { cookies } from 'next/headers'
 import Profile from './Profile'
 import SignIn from './SignIn'
 
-const pages = [
-  { path: '/', pageName: 'Dashboard' },
-  { path: '/generate', pageName: 'Novo Arquivo' }
-]
-
 const Header = () => {
   const isAuthenticated = cookies().has('token')
 
@@ -18,15 +13,17 @@ const Header = () => {
       <Logo />
 
       <ul className='mr-2 flex items-center gap-5 text-xs text-zinc-50/90'>
-        {
-          pages.map((page) => (
-            <Link href={page.path}>
-              <li className={`p-2 rounded-md hover:bg-zinc-700 hover:transition-colors`}>
-                {page.pageName}
-              </li>
-            </Link>
-          ))
-        }
+        <Link href='/'>
+          <li className={`p-2 rounded-md hover:bg-zinc-700 hover:transition-colors`}>
+            Dashboard
+          </li>
+        </Link>
+
+        <Link href='/generate'>
+          <li className={`p-2 rounded-md hover:bg-zinc-700 hover:transition-colors`}>
+            Novo arquivo
+          </li>
+        </Link>
 
         {isAuthenticated ? <Profile /> : <SignIn />}
       </ul>

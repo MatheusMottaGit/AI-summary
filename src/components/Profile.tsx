@@ -4,10 +4,7 @@ import { LogOut, LucideSettings2, User2Icon, Bell } from 'lucide-react'
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem } from '@/components/ui/dropdown-menu'
 import { cookies } from 'next/headers'
 import { api } from '@/lib/api'
-
-interface User {
-  avatarUrl: string
-}
+import { User } from '@/types/user'
 
 const Profile = async () => {
   const token = cookies().get('token')?.value
@@ -31,6 +28,7 @@ const Profile = async () => {
             className='w-8 h-8 rounded-full ml-6'
           />
         </DropdownMenuTrigger>
+
         <DropdownMenuContent className='mr-2'>
           <DropdownMenuLabel>Minha conta</DropdownMenuLabel>
           <DropdownMenuSeparator />

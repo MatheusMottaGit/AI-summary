@@ -8,7 +8,7 @@ import { Label } from '../ui/label'
 const TitleAndFileName = () => {
   return (
     <div className='flex items-center justify-between gap-2'>
-      <h1 className='font-bold text-2xl text-zinc-50'>Gerar novo arquivo</h1>
+      <h1 className='font-bold text-2xl text-zinc-50'>Gerar um novo arquivo</h1>
 
       <Popover>
         <PopoverTrigger>
@@ -25,12 +25,12 @@ const TitleAndFileName = () => {
 
               <Input
                 required
-                placeholder='Evite espaços ou outros caracteres...'
+                placeholder='Evite usar espaços...'
                 className='col-span-2'
               />
             </div>
 
-            <Button>
+            <Button type='submit'>
               Definir nome
               <CheckCheck size={15} />
             </Button>
