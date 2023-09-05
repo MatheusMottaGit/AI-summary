@@ -1,3 +1,4 @@
+import { api } from "@/lib/api";
 import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -8,8 +9,8 @@ export async function GET(request: NextRequest) {
   const accesTokenResponse = await axios.post('https://oauth2.googleapis.com/token', null, {
     params: {
       code,
-      client_id: process.env.NEXT_PUBLIC_CLIENT_ID,
-      client_secret: process.env.NEXT_PUBLIC_CLIENT_SECRET,
+      client_id: process.env.NEXT_PUBLIC_CLIENT_ID || '',
+      client_secret: process.env.NEXT_PUBLIC_CLIENT_SECRET || '',
       redirect_uri: 'http://localhost:3000/api/auth/callback/google',
       grant_type: 'authorization_code'
     }
@@ -17,7 +18,7 @@ export async function GET(request: NextRequest) {
 
   const { access_token } = accesTokenResponse.data
 
-  const response = await axios.post('http://localhost:3333/auth/', { access_token }, {
+  const response = await api.post('/auth', { access_token }, {
     headers: {
       Authorization: `Bearer ${access_token}`
     }
